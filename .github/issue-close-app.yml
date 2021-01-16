@@ -1,0 +1,18 @@
+comment: "请按照模板提交 issue"
+issueConfigs:
+- content:
+# Bug report
+  - "QQ(TIM)版本/QQ(TIM) Version"
+  - "模块版本/Module Version"
+  - "使用的框架名称与框架版本/Xposed Framework and Framework Version"
+  - "问题的具体描述/Detailed Description of the Bug"
+  - "具体描述"
+
+- content:
+# Feature request
+  - "为什么你认为需要此功能"
+  - "联系到哪些已经存在的bug或者功能"
+  - "具体功能需要/Specific features required"
+
+caseInsensitive: true
+label: "invalid"
