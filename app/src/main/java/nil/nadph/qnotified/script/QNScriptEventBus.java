@@ -18,10 +18,14 @@
  */
 package nil.nadph.qnotified.script;
 
-import bsh.EvalError;
-import nil.nadph.qnotified.script.params.*;
+import nil.nadph.qnotified.script.params.FriendAddedParam;
+import nil.nadph.qnotified.script.params.FriendMessageParam;
+import nil.nadph.qnotified.script.params.FriendRequestParam;
+import nil.nadph.qnotified.script.params.GroupJoinedParam;
+import nil.nadph.qnotified.script.params.GroupMessageParam;
+import nil.nadph.qnotified.script.params.GroupRequestParam;
+import nil.nadph.qnotified.script.params.ParamFactory;
 
-import static nil.nadph.qnotified.util.Utils.log;
 
 public class QNScriptEventBus {
 

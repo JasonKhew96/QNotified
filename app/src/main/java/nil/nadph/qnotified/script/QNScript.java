@@ -18,17 +18,19 @@
  */
 package nil.nadph.qnotified.script;
 
-import android.view.View;
+import java.io.IOException;
+
 import bsh.EvalError;
 import bsh.Interpreter;
 import nil.nadph.qnotified.config.ConfigItems;
 import nil.nadph.qnotified.config.ConfigManager;
-import nil.nadph.qnotified.dialog.ScriptSettingDialog;
-import nil.nadph.qnotified.script.params.*;
+import nil.nadph.qnotified.script.params.FriendAddedParam;
+import nil.nadph.qnotified.script.params.FriendMessageParam;
+import nil.nadph.qnotified.script.params.FriendRequestParam;
+import nil.nadph.qnotified.script.params.GroupJoinedParam;
+import nil.nadph.qnotified.script.params.GroupMessageParam;
+import nil.nadph.qnotified.script.params.GroupRequestParam;
 
-import java.io.IOException;
-
-import static nil.nadph.qnotified.util.Utils.en;
 import static nil.nadph.qnotified.util.Utils.log;
 
 public class QNScript {
@@ -44,10 +46,15 @@ public class QNScript {
         this.info = QNScriptInfo.getInfo(code);
     }
 
+    public static QNScript create(Interpreter lp, String code) {
+        return new QNScript(lp, code);
+    }
+
     public void onLoad() {
         try {
-            if (!init){
+            if (!init) {
                 instance.eval(code);
+                init = true;
             }
             instance.eval("onLoad()");
             QNScriptManager.addEnable();
@@ -156,11 +163,6 @@ public class QNScript {
         }
         return this.enable = enable;
     }
-
-    public static QNScript create(Interpreter lp, String code) {
-        return new QNScript(lp, code);
-    }
-
 
     public CharSequence getEnable() {
         return isEnable() ? "[启用]" : "[禁用]";
