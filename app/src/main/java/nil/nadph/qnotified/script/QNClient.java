@@ -23,6 +23,9 @@ import nil.nadph.qnotified.bridge.ChatActivityFacade;
 import nil.nadph.qnotified.bridge.SessionInfoImpl;
 import nil.nadph.qnotified.util.LicenseStatus;
 import nil.nadph.qnotified.util.Utils;
+import static nil.nadph.qnotified.util.ReflexUtil.invoke_virtual;
+import static nil.nadph.qnotified.util.Utils.log;
+
 
 public class QNClient {
     /*
@@ -31,8 +34,10 @@ public class QNClient {
 	QNClient.sendRecord(好友/群号码,"url或者文件");// 发送语音
 	QNClient.sendCard(好友/群号码,"json或者xml代码");// 发送卡片消息(只有高级白名单才可以)
 	QNClient.kick(群号码,成员号码);// 从一个群踢出一个人
-	QNClient.mute(群号码,成员号码,禁言时间[分钟]);// 在某个群禁言一个人
+	QNClient.mute(群号码,成员号码,禁言时间[秒]);// 在某个群禁言一个人
+	QNClient.unmute(群号码,成员号码);// 在某个群解除禁言一个人
 	QNClient.muteAll(群号码);// 开启一个群的全群禁言
+	QNClient.unmuteAll(群号码);// 关闭一个群的全群禁言
      */
 
     /**
@@ -108,8 +113,30 @@ public class QNClient {
      * @param uin      成员id
      * @param time     时间
      */
-    public static void mute(long groupUin, long uin, int time) {
-        // to do
+    public static void mute(long groupUin, long uin, long time) {
+        try {
+            // TODO check is current user admin
+            Object manager = Utils.getManager(48);
+            invoke_virtual(manager, "a", String.valueOf(groupUin), String.valueOf(uin), time, String.class, String.class, long.class);
+        } catch (Throwable e) {
+            log(e);
+        }
+    }
+
+    /**
+     * 解除禁言一个人
+     *
+     * @param groupUin 群id
+     * @param uin      成员id
+     */
+    public static void unmute(long groupUin, long uin) {
+        try {
+            // TODO check is current user admin
+            Object manager = Utils.getManager(48);
+            invoke_virtual(manager, "a", String.valueOf(groupUin), String.valueOf(uin), 0L, String.class, String.class, long.class);
+        } catch (Throwable e) {
+            log(e);
+        }
     }
 
     /**
@@ -118,6 +145,27 @@ public class QNClient {
      * @param groupUin 群id
      */
     public static void muteAll(long groupUin) {
-        // to do
+        try {
+            // TODO check is current user admin
+            Object manager = Utils.getManager(48);
+            invoke_virtual(manager, "a", String.valueOf(groupUin), 268435455L, String.class, long.class);
+        } catch (Throwable e) {
+            log(e);
+        }
+    }
+
+    /**
+     * 关闭全体禁言
+     *
+     * @param groupUin 群id
+     */
+    public static void unmuteAll(long groupUin) {
+        try {
+            // TODO check is current user admin
+            Object manager = Utils.getManager(48);
+            invoke_virtual(manager, "a", String.valueOf(groupUin), 0L, String.class, long.class);
+        } catch (Throwable e) {
+            log(e);
+        }
     }
 }

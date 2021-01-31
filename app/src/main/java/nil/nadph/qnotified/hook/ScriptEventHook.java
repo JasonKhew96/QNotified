@@ -27,7 +27,7 @@ import nil.nadph.qnotified.script.params.ParamFactory;
 import nil.nadph.qnotified.util.LicenseStatus;
 
 import static nil.nadph.qnotified.util.Initiator.load;
-import static nil.nadph.qnotified.util.Utils.iget_object_or_null;
+import static nil.nadph.qnotified.util.ReflexUtil.iget_object_or_null;
 import static nil.nadph.qnotified.util.Utils.log;
 
 public class ScriptEventHook extends CommonDelayableHook {
