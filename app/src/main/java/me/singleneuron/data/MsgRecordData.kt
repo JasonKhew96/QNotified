@@ -38,6 +38,7 @@ data class MsgRecordData(val msgRecord: Any?) {
         const val MSG_TYPE_MEDIA_MARKFACE = -2007             //表情消息[并非"我的收藏" 而是从QQ表情商店下载的表情]
         const val MSG_TYPE_MEDIA_VIDEO = -2009                //QQ语音/视频通话
         const val MSG_TYPE_STRUCT_MSG = -2011                 //卡片消息[分享/签到/转发消息等]
+        const val MSG_TYPE_MEDIA_GROUP_FILE = -2017           //群文件
         const val MSG_TYPE_ARK_APP = -5008                    //小程序分享消息
         const val MSG_TYPE_POKE_MSG = -5012                   //戳一戳
         const val MSG_TYPE_POKE_EMO_MSG = -5018               //另类戳一戳
@@ -56,6 +57,7 @@ data class MsgRecordData(val msgRecord: Any?) {
                 MSG_TYPE_MEDIA_MARKFACE to "表情消息[并非\"我的收藏\" 而是从QQ表情商店下载的表情]",
                 MSG_TYPE_MEDIA_VIDEO to "QQ语音/视频通话",
                 MSG_TYPE_STRUCT_MSG to "卡片消息[分享/签到/转发消息等]",
+                MSG_TYPE_MEDIA_GROUP_FILE to "群文件",
                 MSG_TYPE_ARK_APP to "小程序分享消息",
                 MSG_TYPE_POKE_MSG to "戳一戳",
                 MSG_TYPE_POKE_EMO_MSG to "另类戳一戳",
