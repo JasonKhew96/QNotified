@@ -18,6 +18,8 @@
  */
 package nil.nadph.qnotified.script.params;
 
+import java.security.acl.Group;
+
 public class GroupMessageParam {
     /**
      * 发送者id
@@ -31,6 +33,10 @@ public class GroupMessageParam {
      * 消息内容
      */
     public String content;
+    /**
+     * 时间截
+     */
+    public long time;
 
     public GroupMessageParam setSenderUin(String uin) {
         this.senderuin = uin;
@@ -54,6 +60,11 @@ public class GroupMessageParam {
 
     public GroupMessageParam setContent(String content) {
         this.content = content;
+        return this;
+    }
+
+    public GroupMessageParam setTime(long time) {
+        this.time = time;
         return this;
     }
 

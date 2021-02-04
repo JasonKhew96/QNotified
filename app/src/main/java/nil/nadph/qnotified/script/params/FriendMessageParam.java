@@ -27,6 +27,10 @@ public class FriendMessageParam {
      * 消息内容
      */
     public String content;
+    /**
+     * 时间截
+     */
+    public long time;
 
     public FriendMessageParam setUin(String uin) {
         this.uin = uin;
@@ -40,6 +44,11 @@ public class FriendMessageParam {
 
     public FriendMessageParam setContent(String content) {
         this.content = content;
+        return this;
+    }
+
+    public FriendMessageParam setTime(long time) {
+        this.time = time;
         return this;
     }
 

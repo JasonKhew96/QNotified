@@ -29,7 +29,6 @@ import nil.nadph.qnotified.util.LicenseStatus;
 
 import static nil.nadph.qnotified.util.Initiator.load;
 import static nil.nadph.qnotified.util.Utils.log;
-import static nil.nadph.qnotified.util.Utils.logd;
 
 public class ScriptEventHook extends CommonDelayableHook {
     private static final ScriptEventHook self = new ScriptEventHook();
@@ -71,12 +70,14 @@ public class ScriptEventHook extends CommonDelayableHook {
                                     QNScriptEventBus.broadcastFriendMessage(ParamFactory.friendMessage()
                                         .setContent(msg)
                                         .setUin(uin)
+                                        .setTime(msgRecordData.getTime())
                                         .create());
                                 } else {
                                     QNScriptEventBus.broadcastGroupMessage(ParamFactory.groupMessage()
                                         .setContent(msg)
                                         .setSenderUin(msgRecordData.getSenderUin())
                                         .setUin(uin)
+                                        .setTime(msgRecordData.getTime())
                                         .create());
                                 }
                                 break;
