@@ -20,6 +20,7 @@ package nil.nadph.qnotified.hook;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
+import me.singleneuron.data.MsgRecordData;
 import nil.nadph.qnotified.SyncUtils;
 import nil.nadph.qnotified.script.QNScriptEventBus;
 import nil.nadph.qnotified.script.QNScriptManager;
@@ -27,8 +28,8 @@ import nil.nadph.qnotified.script.params.ParamFactory;
 import nil.nadph.qnotified.util.LicenseStatus;
 
 import static nil.nadph.qnotified.util.Initiator.load;
-import static nil.nadph.qnotified.util.ReflexUtil.iget_object_or_null;
 import static nil.nadph.qnotified.util.Utils.log;
+import static nil.nadph.qnotified.util.Utils.logd;
 
 public class ScriptEventHook extends CommonDelayableHook {
     private static final ScriptEventHook self = new ScriptEventHook();
@@ -59,38 +60,28 @@ public class ScriptEventHook extends CommonDelayableHook {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         if (LicenseStatus.sDisableCommonHooks) return;
-                        // -1000 text
-                        // -2000 photo
-                        // -2007 sticker
-                        // -1049 replyText
-                        // -2022 video
-                        // -2002 audio
-                        int msgType = (Integer) iget_object_or_null(param.args[1], "msgtype");
-                        int isTroop = (Integer) iget_object_or_null(param.args[1], "istroop");
-                        String uin = (String) iget_object_or_null(param.args[1], "frienduin");
-                        String msg = (String) iget_object_or_null(param.args[1], "msg");
-                        switch (msgType) {
-                            case -1000:
-                                if (isTroop != 1) {
+
+                        MsgRecordData msgRecordData = new MsgRecordData(param.args[1]);
+                        String uin = msgRecordData.getFriendUin();
+                        String msg = msgRecordData.getMsg();
+                        switch (msgRecordData.getMsgType()) {
+                            case MsgRecordData.MSG_TYPE_TEXT:
+                            case MsgRecordData.MSG_TYPE_REPLY_TEXT:
+                                if (msgRecordData.isTroop() != 1) {
                                     QNScriptEventBus.broadcastFriendMessage(ParamFactory.friendMessage()
                                         .setContent(msg)
                                         .setUin(uin)
                                         .create());
                                 } else {
-                                    String senderUin = (String) iget_object_or_null(param.args[1], "senderuin");
                                     QNScriptEventBus.broadcastGroupMessage(ParamFactory.groupMessage()
                                         .setContent(msg)
-                                        .setSenderUin(senderUin)
+                                        .setSenderUin(msgRecordData.getSenderUin())
                                         .setUin(uin)
                                         .create());
                                 }
                                 break;
-                            case -2000:
-                            case -2007:
-                            case -1049:
-                            case -2022:
-                            case -2002:
                             default:
+                                // TODO support other message type
                         }
                     }
                 });
